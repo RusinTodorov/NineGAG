@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="node_modules/handlebars/dist/handlebars.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <title>To Do List</title>
+</head>
+
+<body>
+    <div id="input">
+        <form action="#" id="form">
+            <label for="task">Add a task:</label>
+            <input id='task' required>
+            <input type="submit">
+        </form>
+    </div>
+    <div id="toDo">
+        <h2>To Do List:</h1>
+            <ul></ul>
+    </div>
+    <script id="taskTemplate" type="text/x-handlebars-template">
+            {{task}}<button>Remove</button>
+    </script>
+    <script>
+        const form = document.getElementById('form');
+        form.addEventListener('submit', handleSubmit);
+    
+        const ul = document.getElementsByTagName('ul')[0];
+
+        function handleSubmit(e) {
+            e.preventDefault();
+            const input = document.getElementById('task');
+
+            if (input.value.trim().length > 0) {
+                toDoListManager.addTask(input.value);
+
+                const content = { task: input.value };
+
+                addLi(content);
+                input.value = '';
+            }
+        }
+
+        function addLi(content) {
+            const taskTemplate = document.getElementById('taskTemplate').innerHTML;
+            const template = Handlebars.compile(taskTemplate);
+            const li = document.createElement('li');
+            li.innerHTML = template(content);
+            ul.append(li);
+            li.addEventListener('click', handleLi);
+
+            function handleLi(e) {
+
+                if (e.target.nodeName === 'BUTTON') {
+                    toDoListManager.removeTask(content.task);
+                    ul.removeChild(li);
+                } else {
+                    li.classList.toggle('lineThrough');
+                }
+
+            }
+        }
+
+    </script>
+    <script>
+        class ToDoListManager {
+            constructor() {
+            }
+
+            addTask(content) {
+                localStorage.setItem(content, content);
+            }
+
+            removeTask(content) {
+                localStorage.removeItem(content);
+            }
+
+            createTasksFromLocaleStorage() {
+
+                Object.keys(localStorage).forEach(key => {
+                    const content = { task: key };
+
+                    addLi(content);
+                })
+            }
+
+        }
+
+        const toDoListManager = new ToDoListManager();
+        ul.innerHTML = '';
+        toDoListManager.createTasksFromLocaleStorage();
+    </script>
+</body>
+
+</html>

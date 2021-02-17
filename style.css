@@ -1,0 +1,49 @@
+body {
+    background-color: gray;
+    font-size: 16px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+div {
+    display: flex;
+    justify-content: center;
+    margin: 20px auto;
+}
+
+label {
+    color:white;
+}
+
+button {
+    margin-left: 1rem;
+}
+
+ul, form {
+    margin: 0 auto;
+    padding: 1rem;
+    padding-left: 1.8rem;
+    border: 2px solid rgb(64, 252, 7);
+    border-radius: 1rem;
+}
+
+form {
+    padding-left: 1rem;
+}
+
+li {
+    color: aqua;
+    margin: 1rem;
+}
+
+.lineThrough {
+    text-decoration: line-through;
+}
+
+h2 {
+    margin: 0 auto;
+}
+
+#toDo {
+    display: flex;
+    flex-direction: column;
+}
